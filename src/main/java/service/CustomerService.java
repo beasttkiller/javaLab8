@@ -8,6 +8,7 @@ import repositories.CustomerRepositoryTxtImpl;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.List;
 
@@ -69,11 +70,10 @@ public class CustomerService {
                         .thenComparing(Customer::getFullName))
                 .collect(Collectors.toList());
     }
-    public Customer findCustomerById(List<Customer> customers, int id) {
+    public Optional<Customer> findCustomerById(List<Customer> customers, int id) {
         return customers.stream()
                 .filter(c -> c.getId() == id)
-                .findFirst()
-                .orElse(null);
+                .findFirst();
     }
     public double findAveragePurchase(Customer customer) {
         return customer.getNumberPur() > 0 ? customer.getNumberOutlay() / customer.getNumberPur() : 0;

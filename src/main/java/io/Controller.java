@@ -7,6 +7,7 @@ import service.CustomerService;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class Controller {
@@ -69,10 +70,10 @@ public class Controller {
     private void findCustomerAndAverage(Scanner scanner, List<Customer> customers) {
         view.messageEnterFullName();
         int id = Integer.parseInt(scanner.nextLine());
-        Customer found = customerService.findCustomerById(customers, id);
-        if (found != null) {
-            double avg = customerService.findAveragePurchase(found);
-            view.showCustomerAverage(found, avg);
+        Optional<Customer> found = customerService.findCustomerById(customers, id);
+        if (found.isPresent()) {
+            double avg = customerService.findAveragePurchase(found.get());
+            view.showCustomerAverage(found.get(), avg);
         } else {
             view.messageInvalidChoice();
         }
